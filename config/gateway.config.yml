@@ -1,0 +1,44 @@
+http:
+  port: 8080
+admin:
+  port: 9876
+  host: localhost
+apiEndpoints:
+  api-ip:
+    host: "localhost"
+    paths: "/ip"
+  notification:
+    host: "localhost"
+    paths: "/notification"
+serviceEndpoints:
+  httpbin:
+    url: "https://httpbin.org"
+  notification:
+    url: "http://localhost:3000"
+policies:
+  - basic-auth
+  - cors
+  - expression
+  - key-auth
+  - log
+  - oauth2
+  - proxy
+  - rate-limit
+pipelines:
+  - name: deafault
+    apiEndpoints:
+      - api-ip
+    policies:
+      - proxy:
+          - action:
+              serviceEndpoint: httpbin
+              changeOrigin: true
+  - name: notification
+    apiEndpoints:
+      - notification
+    policies:
+      - proxy:
+          - action:
+              serviceEndpoint: notification
+              changeOrigin: false
+    # see: https://www.express-gateway.io/docs/configuration/gateway.config.yml/pipelines
