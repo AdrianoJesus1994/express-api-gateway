@@ -9,7 +9,7 @@ apiEndpoints:
     paths: "/ip"
   notification:
     host: "localhost"
-    paths: "/notification"
+    paths: "/api-docs"
 serviceEndpoints:
   httpbin:
     url: "https://httpbin.org"
